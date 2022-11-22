@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 type Animal interface {
@@ -22,26 +23,42 @@ func main() {
 	zoo = make(map[string]Animal)
 
 	fmt.Printf("Write a command: newanimal or query\n")
-	fmt.Printf("-> ")
-	fmt.Scanf("%s %s %s\n", &argv1, &argv2, &argv3)
 
-	if argv1 != "newanimal" && argv1 != "query" {
-		usage()
-	} else if argv1 == "newanimal" {
-		switch argv3 {
-		case "cow":
-			zoo[argv2] = Cow{name: argv2}
-			fmt.Printf("Created it!\n")
-		case "bird":
-			zoo[argv2] = Bird{name: argv2}
-			fmt.Printf("Created it!\n")
-		case "snake":
-			zoo[argv2] = Snake{name: argv2}
-			fmt.Printf("Created it!\n")
-		default:
-			fmt.Errorf("There is not an animal %v", argv2)
+	for true {
+		fmt.Printf("-> ")
+		fmt.Scanf("%s %s %s\n", &argv1, &argv2, &argv3)
+
+		if strings.ToLower(argv1) != "newanimal" && strings.ToLower(argv1) != "query" {
 			usage()
-			return
+		} else if strings.ToLower(argv1) == "newanimal" {
+			switch strings.ToLower(argv3) {
+			case "cow":
+				zoo[argv2] = Cow{name: argv2}
+				fmt.Printf("Created it!\n")
+			case "bird":
+				zoo[argv2] = Bird{name: argv2}
+				fmt.Printf("Created it!\n")
+			case "snake":
+				zoo[argv2] = Snake{name: argv2}
+				fmt.Printf("Created it!\n")
+			default:
+				fmt.Errorf("There is not an animal %v", argv2)
+				usage()
+				return
+			}
+		} else if strings.ToLower(argv1) == "query" {
+			switch strings.ToLower(argv3) {
+			case "eat":
+				zoo[argv2].Eat()
+			case "move":
+				zoo[argv2].Move()
+			case "speak":
+				zoo[argv2].Speak()
+			default:
+				fmt.Errorf("There is not a request %v", argv3)
+				usage()
+				return
+			}
 		}
 	}
 

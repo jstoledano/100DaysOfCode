@@ -44,24 +44,25 @@ func main() {
 			default:
 				fmt.Errorf("There is not an animal %v", argv2)
 				usage()
-				return
 			}
 		} else if strings.ToLower(argv1) == "query" {
-			switch strings.ToLower(argv3) {
-			case "eat":
-				zoo[argv2].Eat()
-			case "move":
-				zoo[argv2].Move()
-			case "speak":
-				zoo[argv2].Speak()
-			default:
-				fmt.Errorf("There is not a request %v", argv3)
-				usage()
-				return
+			if _, ok := zoo[argv2]; ok {
+				switch strings.ToLower(argv3) {
+				case "eat":
+					zoo[argv2].Eat()
+				case "move":
+					zoo[argv2].Move()
+				case "speak":
+					zoo[argv2].Speak()
+				default:
+					fmt.Errorf("There is not such verb %v", argv3)
+					usage()
+				}
+			} else {
+				fmt.Printf("There is not such animal %v\n", argv2)
 			}
 		}
 	}
-
 }
 
 type Cow struct{ name string }

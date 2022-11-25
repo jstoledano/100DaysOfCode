@@ -64,7 +64,9 @@ func main() {
 }
 
 func sortSegment(segmento []int) []int {
+	fmt.Printf("Unorderer segment: %v", segmento)
 	sort.Ints(segmento)
+	fmt.Printf("\t\tOrderer segment: %v\n", segmento)
 	return segmento
 }
 
